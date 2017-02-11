@@ -29,9 +29,8 @@ namespace AssureNetServicesPOC
             config.Filter();
             config.Filters.Add(new EnableQueryAttribute() { PageSize = 50});
             builder.EntitySet<ReconAccount>("ReconAccounts");
-            var function = builder.Function("GetReconAccounts");
-            function.Parameter<string>("CompanyCode");
-            function.ReturnsCollectionFromEntitySet<ReconAccount>("ReconAccounts");
+            builder.EntitySet<Reconciliations_Files>("ReconFiles");
+            builder.EntitySet<view_ReconciliationResults>("ReconResults");
 
 
             config.MapODataServiceRoute(

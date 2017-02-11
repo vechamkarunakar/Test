@@ -13,12 +13,27 @@ using System.Web.OData.Query;
 
 namespace AssureNetServicesPOC.Controllers
 {
-    public class ReconAccountsController : ODataController, IReconAccountsRepository, IDisposable
+    public class ReconAccountsController : GenericController<ReconAccount>,  IDisposable
     {
-        ReconAccountsRepository _repo = new ReconAccountsRepository();
+        
+    }
+
+    public class ReconFilesController : GenericController<Reconciliations_Files>, IDisposable
+    {
+
+    }
+
+    public class ReconResultsController : GenericController<view_ReconciliationResults>, IDisposable
+    {
+
+    }
 
 
-        public IQueryable<ReconAccount> Get(ODataQueryOptions<ReconAccount> queryOptions)
+    public class GenericController<TEntity> : ODataController, IDisposable where TEntity : class
+    {
+        UnitOfWork<TEntity> uow = new UnitOfWork<TEntity>();
+
+        public IQueryable<TEntity> Get(ODataQueryOptions<TEntity> queryOptions)
         {
             var settings = new ODataValidationSettings()
             {
@@ -27,24 +42,10 @@ namespace AssureNetServicesPOC.Controllers
 
             queryOptions.Validate(settings);
 
-            var results = queryOptions.ApplyTo(_repo.Get()) as IQueryable<ReconAccount>;
+            var results = queryOptions.ApplyTo(uow.GetEntities.Get()) as IQueryable<TEntity>;
 
             return results;
         }
-
-
-        [EnableQuery]
-        public SingleResult<ReconAccount> Get([FromODataUri] int key)
-        {
-            return _repo.Get(key);
-        }
-
-        //[HttpGet]
-        //[EnableQuery]
-        //public IHttpActionResult GetReconAccounts([FromODataUri]string CompanyCode)
-        //{
-        //    //return Ok(_repo.Get);
-        //}
 
     }
 }

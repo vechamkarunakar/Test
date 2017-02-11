@@ -9,6 +9,6 @@ namespace AssureNetServicesPOC.Controllers
     public interface IReconAccountsRepository
     {
         IQueryable<ReconAccount> Get(ODataQueryOptions<ReconAccount> queryOptions);
-        SingleResult<ReconAccount> Get([FromODataUri] int key);
+        //SingleResult<ReconAccount> Get([FromODataUri] int key);
     }
 }
