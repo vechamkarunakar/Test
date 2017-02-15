@@ -13,6 +13,7 @@ using System.Web.OData.Query;
 
 namespace AssureNetServicesPOC.Controllers
 {
+    
     public class ReconAccountsController : GenericController<ReconAccount>,  IDisposable
     {
         
@@ -27,6 +28,8 @@ namespace AssureNetServicesPOC.Controllers
     {
 
     }
+
+    
 
 
     public class GenericController<TEntity> : ODataController, IDisposable where TEntity : class

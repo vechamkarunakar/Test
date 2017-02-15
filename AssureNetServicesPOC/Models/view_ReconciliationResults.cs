@@ -38,7 +38,7 @@ namespace AssureNetServicesPOC.Models
         [StringLength(100)]
         public string AccountSegment10 { get; set; }
 
-        public int? PKId { get; set; }
+        public int PKId { get; set; }
 
         [StringLength(15)]
         public string LocationID { get; set; }

@@ -21,15 +21,15 @@ namespace AssureNetServicesPOC
             ctx = new ReconciliationAccountsContext();
         }
 
-        private GenericRepo<TEntity> reconAccountsRepo;
+        private GenericRepo<TEntity> entitiesRepo;
 
         public GenericRepo<TEntity> GetEntities
         {
             get
             {
-                if (this.reconAccountsRepo == null)
-                    this.reconAccountsRepo = new GenericRepo<TEntity>(ctx);
-                return reconAccountsRepo;
+                if (this.entitiesRepo == null)
+                    this.entitiesRepo = new GenericRepo<TEntity>(ctx);
+                return entitiesRepo;
             }
         }
 
