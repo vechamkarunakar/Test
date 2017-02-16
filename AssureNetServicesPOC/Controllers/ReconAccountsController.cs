@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
+using System.Security.Claims;
+using System.Net.Http;
 
 namespace AssureNetServicesPOC.Controllers
 {
-    
+    [Authorize]
     public class ReconAccountsController : GenericController<ReconAccount>,  IDisposable
     {
         
@@ -29,8 +31,6 @@ namespace AssureNetServicesPOC.Controllers
 
     }
 
-    
-
 
     public class GenericController<TEntity> : ODataController, IDisposable where TEntity : class
     {
@@ -38,18 +38,15 @@ namespace AssureNetServicesPOC.Controllers
 
         public IQueryable<TEntity> Get(ODataQueryOptions<TEntity> queryOptions)
         {
+            var loginName = HttpContext.Current.Request.LogonUserIdentity.Name;
             var settings = new ODataValidationSettings()
             {
                 AllowedFunctions = AllowedFunctions.Contains
             };
-
             queryOptions.Validate(settings);
-
             var results = queryOptions.ApplyTo(uow.GetEntities.Get()) as IQueryable<TEntity>;
-
             return results;
         }
-
     }
 }
 
