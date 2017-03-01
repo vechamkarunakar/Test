@@ -7,7 +7,7 @@ using System.Web;
 
 namespace AssureNetServicesPOC
 {
-    public class UnitOfWork<TEntity> : IDisposable where TEntity: class
+    public class UnitOfWork<TEntity> : IDisposable, IUnitOfWork<TEntity> where TEntity: class
     {
         internal ReconciliationAccountsContext ctx;
 

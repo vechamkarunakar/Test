@@ -15,7 +15,9 @@ using System.Net.Http;
 
 namespace AssureNetServicesPOC.Controllers
 {
-    [Authorize]
+    /// <summary>
+    /// 
+    /// </summary>
     public class ReconAccountsController : GenericController<ReconAccount>,  IDisposable
     {
         
@@ -31,10 +33,25 @@ namespace AssureNetServicesPOC.Controllers
 
     }
 
-
-    public class GenericController<TEntity> : ODataController, IDisposable where TEntity : class
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    public class GenericController<TEntity> : ODataController, IDisposable, IGenericController<TEntity> where TEntity : class
     {
-        UnitOfWork<TEntity> uow = new UnitOfWork<TEntity>();
+        private IUnitOfWork<TEntity> uow;
+
+        public GenericController(IUnitOfWork<TEntity> iow)
+        {
+            this.uow = iow;
+        }
+
+        public GenericController()
+        {
+            uow = new UnitOfWork<TEntity>();
+        }
+
+        //UnitOfWork<TEntity> uow = new UnitOfWork<TEntity>();
 
         public IQueryable<TEntity> Get(ODataQueryOptions<TEntity> queryOptions)
         {

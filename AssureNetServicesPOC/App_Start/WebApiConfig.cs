@@ -6,6 +6,7 @@ using AssureNetServicesPOC.Models;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using System.Web.OData;
+using Microsoft.Practices.Unity;
 
 namespace AssureNetServicesPOC
 {
@@ -13,6 +14,11 @@ namespace AssureNetServicesPOC
     {
         public static void Register(HttpConfiguration config)
         {
+
+            var container = new UnityContainer();
+            //container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
+
             // Web API configuration and services
 
             // Web API routes

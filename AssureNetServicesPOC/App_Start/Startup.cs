@@ -4,6 +4,7 @@ using Microsoft.Owin;
 using Owin;
 using Microsoft.Owin.Security.ActiveDirectory;
 using System.Configuration;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(AssureNetServicesPOC.App_Start.Startup))]
 

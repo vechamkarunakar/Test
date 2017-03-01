@@ -197,6 +197,6 @@ namespace AssureNetServicesPOC.Models
         [StringLength(100)]
         public string ApproverFullName { get; set; }
 
-        public virtual Reconciliations_Files FileAttachment { get; set; }
+        //public virtual Reconciliations_Files FileAttachment { get; set; }
     }
 }

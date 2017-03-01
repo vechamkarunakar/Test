@@ -52,6 +52,6 @@ namespace AssureNetServicesPOC.Models
         public int? ModifyByID { get; set; }
 
 
-        public virtual view_ReconciliationResults RAccount { get; set; }
+        //public virtual view_ReconciliationResults RAccount { get; set; }
     }
 }

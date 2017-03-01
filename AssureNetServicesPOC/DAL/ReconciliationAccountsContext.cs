@@ -12,11 +12,11 @@ namespace AssureNetServicesPOC.DAL
             //modelBuilder.Entity<view_ReconciliationResults>().ToTable("view_ReconciliationResults")
             //   .HasRequired(c => c.FileAttachment).WithRequiredPrincipal(x => x.RAccount);
 
-            modelBuilder.Entity<view_ReconciliationResults>().ToTable("view_ReconciliationResults")
-                .HasOptional(x => x.FileAttachment).WithOptionalDependent(y => y.RAccount);
+            //modelBuilder.Entity<view_ReconciliationResults>().ToTable("view_ReconciliationResults")
+            //    .HasOptional(x => x.FileAttachment).WithOptionalDependent(y => y.RAccount);
 
-            modelBuilder.Entity<Reconciliations_Files>()
-                .HasOptional(x => x.RAccount).WithOptionalPrincipal(y => y.FileAttachment);
+            //modelBuilder.Entity<Reconciliations_Files>()
+            //    .HasOptional(x => x.RAccount).WithOptionalPrincipal(y => y.FileAttachment);
 
 
 
