@@ -51,7 +51,7 @@ namespace AssureNetServicesPOC.Tests
 
             string oDataQuery = GenerateODataURI("http://localhost:5647/ReconAccounts?", strList);
 
-
+            oDataQuery = "http://localhost:1869/ActiveUsers";
             try
             {
                 ClientCredential cred = new ClientCredential(clientId, aadSecret);
