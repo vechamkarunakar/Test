@@ -96,11 +96,5 @@ namespace AssureNetServicesPOC.Models
 
         [StringLength(200)]
         public string FileName { get; set; }
-
-        public int ReconcilerID { get; set; }
-
-        public int ReviewerID { get; set; }
-
-        public int ApproverID { get; set; }
     }
 }

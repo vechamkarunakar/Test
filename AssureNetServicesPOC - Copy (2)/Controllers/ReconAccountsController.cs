@@ -12,8 +12,11 @@ using System.Web.OData;
 using System.Web.OData.Query;
 using System.Security.Claims;
 using System.Net.Http;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Diagnostics;
+using Microsoft.Owin;
 using AssureNetServicesPOC.Pipeline;
-using AssureNetServicesPOC.DAL;
 
 namespace AssureNetServicesPOC.Controllers
 {
@@ -23,88 +26,98 @@ namespace AssureNetServicesPOC.Controllers
     public class ReconAccountsController : GenericController<ReconAccount>,  IDisposable
     {
     }
-    /// <summary>
-    /// 
-    /// </summary>
     [Authorize]
     public class ReconFilesController : GenericController<Reconciliations_Files>, IDisposable
     {
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     [Authorize]
     public class ActiveUsersController : GenericController<ActiveUser>, IDisposable
     {
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     [AssurenetAuthorize]
     public class ReconDetailsController : ODataController
     {
-        private ActiveUser activeUser { get; set; }
+        public ActiveUser activeUser { get; set; }
+
         private IUnitOfWork<ReconDetail> uow;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="iow"></param>
+        //public HttpResponseMessage Get(string filename)
+        //{
+        //    string ROOT = "";
+        //    var path = Path.Combine(ROOT, filename);
+        //    if (!File.Exists(path))
+        //        throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "File not exists!"));
+        //    var result = new HttpResponseMessage(HttpStatusCode.OK);
+        //    var stream = new FileStream(path, FileMode.Open);
+        //    result.Content = new StreamContent(stream);
+        //    result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+        //    return result;
+        //}
+
         public ReconDetailsController(IUnitOfWork<ReconDetail> iow)
         {
             this.uow = iow;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public ReconDetailsController()
         {
-            this.uow = new UnitOfWork<ReconDetail>();
+            var ctx = HttpContext.Current.GetOwinContext();
+            //var user = HttpContext.Current.User;
+            var name = this.User.Identity.Name;
+            Debug.Write(name);
+            //uow = new UnitOfWork<ReconDetail>();
+            //ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+            //string loginName = RequestContext.Principal.Identity.Name;
+
+            ////var identity = User.Identity as ClaimsIdentity;
+            ////Claim identityClaim = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            ////var str = RequestContext.Principal.Identity.Name;
+            ////var loginName = context.Users.FirstOrDefault(u => u.Id == identityClaim.Value);
+
+
+            ////foreach (var item in identity.Claims)
+            ////{
+            ////    Debug.WriteLine(item.Issuer + "--" + item.Value);
+            ////}
+
+            ////var loginName = this.User.Identity.Name;
+            //if (loginName == null) throw new Exception("Invalid User Exception");
+            //string[] username = loginName.Split("\\".ToCharArray());
+            //string userAlias = username[1];
+            //UnitOfWork<ActiveUser> au = new UnitOfWork<ActiveUser>();
+            //activeUser = au.GetEntities.Get().Where<ActiveUser>(un => un.UserName.ToLower() == userAlias).SingleOrDefault();
+            
         }
 
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="queryOptions"></param>
-        /// <returns></returns>
+
         public IEnumerable<ReconDetail> Get(ODataQueryOptions<ReconDetail> queryOptions)
         {
-            var loginName = HttpContext.Current.Request.LogonUserIdentity.Name;
-            if (string.IsNullOrEmpty(loginName)) return null;
-            //Assuming that login name always have domain\\useralias
-
-            var domainAlias = loginName.Split("\\".ToCharArray());
-            string userAlias = domainAlias[1];
-            UserRepo userRepo = new UserRepo();
-            var user = userRepo.GetUser(userAlias);
-
             IEnumerable<ReconDetail> rd = null;
-            if (user.Role_ProgramAdmin)
+            if (activeUser.Role_ProgramAdmin)
             {
                 rd = queryOptions.ApplyTo(uow.GetEntities.Get()) as IEnumerable<ReconDetail>;
             }
             else
             {
-                //rd = queryOptions.ApplyTo(uow.GetEntities.Get()) as IEnumerable<ReconDetail>;
-                rd = queryOptions.ApplyTo(uow.GetEntities.Get().Where(r => (r.Approver.Contains(user.UserName.ToLower()) && user.Role_Approver)
-                        || (r.Reconciler.Contains(user.UserName.ToLower()) && user.Role_Reconciler)
-                        || (r.Reviewer.Contains(user.UserName.ToLower()) && user.Role_Reviewer)))
-                        as IEnumerable<ReconDetail>;
+                rd = queryOptions.ApplyTo(uow.GetEntities.Get()) as IEnumerable<ReconDetail>;
+                //rd = queryOptions.ApplyTo(uow.GetEntities.Get().Where(r => r.Approver.Contains(activeUser.UserName.ToLower())
+                //        || r.Reconciler.Contains(activeUser.UserName.ToLower()) || r.Reviewer.Contains(activeUser.UserName.ToLower()))) 
+                //        as IEnumerable<ReconDetail>;
             }
 
             return rd;
         }
+
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+
     public class ReconResultsController : GenericController<view_ReconciliationResults>, IDisposable
     {
+
+
     }
 
     /// <summary>
@@ -115,18 +128,11 @@ namespace AssureNetServicesPOC.Controllers
     {
         private IUnitOfWork<TEntity> uow;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="iow"></param>
         public GenericController(IUnitOfWork<TEntity> iow)
         {
             this.uow = iow;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public GenericController()
         {
             uow = new UnitOfWork<TEntity>();
@@ -136,7 +142,7 @@ namespace AssureNetServicesPOC.Controllers
         
         public IEnumerable<TEntity> Get(ODataQueryOptions<TEntity> queryOptions)
         {
-            var loginName = HttpContext.Current.Request.LogonUserIdentity.Name;
+            
             //var settings = new ODataValidationSettings()
             //{
             //    AllowedFunctions = AllowedFunctions.Contains,

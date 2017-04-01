@@ -45,8 +45,10 @@ namespace AssureNetServicesPOC.Models
         [Column(Order = 7)]
         public bool Role_Reconciler { get; set; }
 
+
         [Key]
         [Column(Order = 8)]
         public bool Role_ProgramAdmin { get; set; }
+        
     }
 }

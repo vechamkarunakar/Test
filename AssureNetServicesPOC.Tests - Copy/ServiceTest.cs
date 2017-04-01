@@ -63,9 +63,9 @@ namespace AssureNetServicesPOC.Tests
 
             string oDataQuery = GenerateODataURI("http://localhost:5647/ReconAccounts?", strList);
 
-            oDataQuery = "http://vecham.fareast.corp.microsoft.com:5647/ActiveUsers";
+            //oDataQuery = "http://vecham.fareast.corp.microsoft.com:5647/ActiveUsers";
 
-            //oDataQuery = "http://localhost:1869/ActiveUsers";
+            oDataQuery = "http://localhost:5647/ReconDetails";
 
             try
             {
@@ -78,12 +78,12 @@ namespace AssureNetServicesPOC.Tests
             }
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
 
-            
-            
+
+
             HttpResponseMessage response = httpClient.GetAsync(oDataQuery).Result;
             string s = response.Content.ReadAsStringAsync().Result;
 
-            var reconAccounts = JsonConvert.DeserializeObject<ODataResponse<ReconAccount>>(s);
+            //var reconAccounts = JsonConvert.DeserializeObject<ODataResponse<ReconAccount>>(s);
         }
 
         private string GenerateODataURI(string baseAddress, List<string> companyCodes)
@@ -97,11 +97,40 @@ namespace AssureNetServicesPOC.Tests
             strFilter = string.Join(" or ", filter);
 
             strResult = string.Format("{0}$filter=({1})", baseAddress, strFilter);
-            
+
 
             return strResult;
         }
-        
+
+        [TestMethod]
+        public void TestUser()
+        {
+            string loginName = "fareast\\kavecham";
+            string[] un = loginName.Split("\\".ToCharArray());
+
+            UserInfo ui = Utils.GetNames().Where(s => s.FirstName.ToLower() == un[1].ToLower()).SingleOrDefault<UserInfo>();
+
+
+
+        }
+    }
+
+    public class UserInfo
+    {
+        public string FirstName { get; set; }
+        public bool isAdmin { get; set; }
+    }
+
+
+    public static class Utils
+    {
+        public static IQueryable<UserInfo> GetNames()
+        {
+            List<UserInfo> lst = new List<UserInfo>();
+            lst.Add(new UserInfo() { FirstName = "kavecham", isAdmin = true });
+            lst.Add(new UserInfo() { FirstName = "somename", isAdmin = false });
+            return lst.AsQueryable();
+        }
     }
 
     internal class ODataResponse<T>
@@ -123,5 +152,5 @@ namespace AssureNetServicesPOC.Tests
         public string Approver { get; set; }
         public string Attachment { get; set; }
     }
-
 }
+

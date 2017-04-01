@@ -11,6 +11,7 @@ using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using AssureNetServicesPOC.Models;
 
 namespace AssureNetServicesPOC.Tests
 {
@@ -36,6 +37,23 @@ namespace AssureNetServicesPOC.Tests
         {
             CustomQueries cq = new CustomQueries();
             var x = cq.GetAccountsWithAttachments();
+        }
+
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            UserRepo up = new UserRepo();
+            var user = up.GetUser("kavecham");
+
+
+            UnitOfWork<ReconDetail> uow = new UnitOfWork<ReconDetail>();
+
+            var res = uow.GetEntities.Get().Where(r => (r.ReconcilerID == user.PKId && user.Role_Reconciler));
+                        //|| (r.Reconciler.Contains(user.UserName.ToLower()) && user.Role_Reconciler)
+                        //|| (r.Reviewer.Contains(user.UserName.ToLower()) && user.Role_Reviewer));
+
+            var list = res.ToList<ReconDetail>();
         }
 
         [TestMethod]
