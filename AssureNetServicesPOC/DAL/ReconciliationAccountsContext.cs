@@ -11,6 +11,7 @@ namespace AssureNetServicesPOC.DAL
             modelBuilder.Entity<Reconciliations_Files>().ToTable("Reconciliations_Files");
             modelBuilder.Entity<ActiveUser>().ToTable("ActiveUsers");
             modelBuilder.Entity<ReconDetail>().ToTable("ReconDetails");
+            modelBuilder.Entity<EffectiveDate>().ToTable("EffectiveDates");
             //modelBuilder.Entity<view_ReconciliationResults>().ToTable("view_ReconciliationResults")
             //   .HasRequired(c => c.FileAttachment).WithRequiredPrincipal(x => x.RAccount);
 
@@ -32,5 +33,6 @@ namespace AssureNetServicesPOC.DAL
         public virtual DbSet<view_ReconciliationResults> view_ReconciliationResults { get; set; }
         public virtual IDbSet<ActiveUser> ActiveUsers { get; set; }
         public virtual IDbSet<ReconDetail> ReconDetails { get; set; }
+        public virtual IDbSet<EffectiveDate> EffectiveDates { get; set; }
     }
 }

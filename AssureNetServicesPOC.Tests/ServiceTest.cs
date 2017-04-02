@@ -57,6 +57,16 @@ namespace AssureNetServicesPOC.Tests
         }
 
         [TestMethod]
+        public void Test_CheckEffectiveDateFilterForFBIS()
+        {
+
+            EffectiveDatesRepo edr = new EffectiveDatesRepo();
+            DateTime dt = edr.FilterForFBIS();
+
+
+        }
+
+        [TestMethod]
         public void TestMethod2()
         {
             AuthenticationResult result = null;

@@ -5,7 +5,9 @@ namespace AssureNetServicesPOC.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class EffectiveDate
     {
         [Key]

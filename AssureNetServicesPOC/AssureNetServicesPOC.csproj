@@ -270,6 +270,7 @@
     <Compile Include="Controllers\IReconAccountsController.cs" />
     <Compile Include="Controllers\ReconAccountsController.cs" />
     <Compile Include="DAL\CustomQueries.cs" />
+    <Compile Include="DAL\EffectiveDatesRepo.cs" />
     <Compile Include="DAL\UserRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -277,6 +278,7 @@
     <Compile Include="DAL\GenericRepo.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Models\ActiveUser.cs" />
+    <Compile Include="Models\EffectiveDate.cs" />
     <Compile Include="Models\ReconAccount.cs" />
     <Compile Include="DAL\ReconciliationAccountsContext.cs" />
     <Compile Include="Models\Reconciliations_Files.cs" />

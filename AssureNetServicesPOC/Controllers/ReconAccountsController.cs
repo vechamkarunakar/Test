@@ -82,17 +82,19 @@ namespace AssureNetServicesPOC.Controllers
             UserRepo userRepo = new UserRepo();
             var user = userRepo.GetUser(userAlias);
 
+            EffectiveDatesRepo edr = new EffectiveDatesRepo();
+            DateTime dtFilter = edr.FilterForFBIS();
+
             IEnumerable<ReconDetail> rd = null;
             if (user.Role_ProgramAdmin)
             {
-                rd = queryOptions.ApplyTo(uow.GetEntities.Get()) as IEnumerable<ReconDetail>;
+                rd = queryOptions.ApplyTo(uow.GetEntities.Get().Where(r => r.EffectiveDate > dtFilter)) as IEnumerable<ReconDetail>;
             }
             else
             {
-                //rd = queryOptions.ApplyTo(uow.GetEntities.Get()) as IEnumerable<ReconDetail>;
-                rd = queryOptions.ApplyTo(uow.GetEntities.Get().Where(r => (r.Approver.Contains(user.UserName.ToLower()) && user.Role_Approver)
-                        || (r.Reconciler.Contains(user.UserName.ToLower()) && user.Role_Reconciler)
-                        || (r.Reviewer.Contains(user.UserName.ToLower()) && user.Role_Reviewer)))
+                rd = queryOptions.ApplyTo(uow.GetEntities.Get().Where(r => ((r.ReconcilerID == user.PKId && user.Role_Reconciler)
+                        || (r.ReviewerID == user.PKId && user.Role_Reviewer)
+                        || (r.ApproverID == user.PKId && user.Role_Approver)) && (r.EffectiveDate > dtFilter)))
                         as IEnumerable<ReconDetail>;
             }
 

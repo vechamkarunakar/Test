@@ -51,7 +51,7 @@ namespace AssureNetServicesPOC.Tests
         }
 
         [TestMethod]
-        public void TestMethod2()
+        public void Test_ReconDetails()
         {
             AuthenticationResult result = null;
             authContext = new AuthenticationContext(authority);
@@ -83,8 +83,10 @@ namespace AssureNetServicesPOC.Tests
             HttpResponseMessage response = httpClient.GetAsync(oDataQuery).Result;
             string s = response.Content.ReadAsStringAsync().Result;
 
-            //var reconAccounts = JsonConvert.DeserializeObject<ODataResponse<ReconAccount>>(s);
+            //var reconAccounts = JsonConvert.DeserializeObject<ODataResponse<RecondDetail>>(s);
         }
+
+       
 
         private string GenerateODataURI(string baseAddress, List<string> companyCodes)
         {
