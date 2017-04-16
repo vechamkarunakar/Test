@@ -22,7 +22,7 @@ namespace AssureNetServicesPOC.Controllers
     /// <summary>
     /// 
     /// </summary>
-    //[AssurenetAuthorize]
+    [AssurenetAuthorize]
     public class ReconDetailsController : ODataController
     {
         private ActiveUser activeUser { get; set; }
@@ -75,54 +75,5 @@ namespace AssureNetServicesPOC.Controllers
 
             return rd;
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="ReconId"></param>
-        /// <returns></returns>
-        //[HttpGet]
-        //[EnableQuery(AllowedQueryOptions=AllowedQueryOptions.None)]
-        //public HttpResponseMessage DownloadFile([FromODataUri]string fileName, [FromODataUri]int ReconId)
-        //{
-        //    var res1 = DownloadFile(fileName);
-        //    return res1;
-
-        //    var userAlias = GetUserAlias();
-        //    HttpResponseMessage res = null;
-        //    UserRepo userRepo = new UserRepo();
-        //    var user = userRepo.GetUser(userAlias);
-
-        //    EffectiveDatesRepo edr = new EffectiveDatesRepo();
-        //    DateTime dtFilter = edr.FilterForFBIS();
-
-        //    IEnumerable<ReconDetail> rd = null;
-        //    if (user.Role_ProgramAdmin)
-        //    {
-        //        Debug.WriteLine("Admin functionality");
-        //        rd = uow.GetEntities.Get().Where(r => r.EffectiveDate > dtFilter && r.FileName == fileName && r.ReconId == ReconId);
-        //    }
-        //    else
-        //    {
-        //        Debug.WriteLine("Non Admin functionality");
-        //        rd = uow.GetEntities.Get().Where((r => ((r.ReconcilerID == user.PKId && user.Role_Reconciler)
-        //                || (r.ReviewerID == user.PKId && user.Role_Reviewer)
-        //                || (r.ApproverID == user.PKId && user.Role_Approver)) && (r.EffectiveDate > dtFilter)
-        //                    && (r.FileName == fileName)
-        //                    && (r.ReconId == ReconId)
-        //                    )
-        //                );
-        //    }
-        //    if (rd != null && rd.Count() != 0)
-        //    {
-        //        Debug.WriteLine("Download stream");
-        //        res = DownloadFile(fileName);
-        //    }
-        //    return res;
-        //}
-
-        
     }
 }

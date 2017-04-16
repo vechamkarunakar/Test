@@ -12,6 +12,7 @@ namespace AssureNetServicesPOC.Controllers
     [Authorize]
     public class ActiveUsersController : GenericController<ActiveUser>, IDisposable
     {
+        //TODO:Not used currently. Will check if this Action is required later
         [HttpPost]
         public IHttpActionResult GetUser(int key)
         {

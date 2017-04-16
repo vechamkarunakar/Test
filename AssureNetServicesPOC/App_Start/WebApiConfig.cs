@@ -27,10 +27,10 @@ namespace AssureNetServicesPOC
             var container = new UnityContainer();
             config.DependencyResolver = new UnityResolver(container);
 
-            config.MapHttpAttributeRoutes();
-            config.Filter();
-            config.Filters.Add(new EnableQueryAttribute() { PageSize = 50 });
-            config.Count().Filter(System.Web.OData.Query.QueryOptionSetting.Allowed).OrderBy().Expand().Select().MaxTop(null);
+            //config.MapHttpAttributeRoutes();
+            //config.Filter();
+            //config.Filters.Add(new EnableQueryAttribute() { PageSize = 50 });
+            //config.Count().Filter(System.Web.OData.Query.QueryOptionSetting.Allowed).OrderBy().Expand().Select().MaxTop(null);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

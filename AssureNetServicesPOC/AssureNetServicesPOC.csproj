@@ -271,6 +271,7 @@
     <Compile Include="Controllers\ActiveUsersController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FileProvider.cs" />
+    <Compile Include="Controllers\GenericController.cs" />
     <Compile Include="Controllers\IFileProvider.cs" />
     <Compile Include="Controllers\IGenericController.cs" />
     <Compile Include="Controllers\IReconAccountsController.cs" />

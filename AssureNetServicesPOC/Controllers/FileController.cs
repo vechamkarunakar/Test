@@ -102,7 +102,13 @@ namespace AssureNetServicesPOC.Controllers
                             )
                         );
             }
-            return true;
+
+            if (rd != null && rd.Count() != 0)
+            {
+                return true;
+            }
+            else
+                return false;
         }
 
     }

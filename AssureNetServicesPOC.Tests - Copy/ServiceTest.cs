@@ -11,6 +11,7 @@ using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace AssureNetServicesPOC.Tests
 {
@@ -22,7 +23,7 @@ namespace AssureNetServicesPOC.Tests
         private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
         private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
         Uri redirectUri = new Uri(ConfigurationManager.AppSettings["ida:RedirectUri"]);
-        private static string assureNetResourceId = ConfigurationManager.AppSettings["todo:TodoListResourceId"];
+        private static string assureNetResourceId = ConfigurationManager.AppSettings["ResourceId"];
         private static string assureNetBaseAddress = ConfigurationManager.AppSettings["todo:TodoListBaseAddress"];
 
 
@@ -31,24 +32,9 @@ namespace AssureNetServicesPOC.Tests
         private HttpClient httpClient = new HttpClient();
         private AuthenticationContext authContext = null;
 
-        [TestMethod]
-        public void TestMethod1()
-        {
-            CustomQueries cq = new CustomQueries();
-            var x = cq.GetAccountsWithAttachments();
-        }
+        
 
-        [TestMethod]
-        public void GetCustomQueriesTest()
-        {
-            CustomQueries cq = new CustomQueries();
-            var x = cq.GetAccountsWithAttachments();
-            string str = string.Empty;
-            foreach (var item in x)
-            {
-                str = str + item;
-            }
-        }
+        
 
         [TestMethod]
         public void Test_ReconDetails()
@@ -63,9 +49,11 @@ namespace AssureNetServicesPOC.Tests
 
             string oDataQuery = GenerateODataURI("http://localhost:5647/ReconAccounts?", strList);
 
-            //oDataQuery = "http://vecham.fareast.corp.microsoft.com:5647/ActiveUsers";
+            oDataQuery = "http://vecham.fareast.corp.microsoft.com:5647/ActiveUsers";
 
             oDataQuery = "http://localhost:5647/ReconDetails";
+
+            oDataQuery = @"http://localhost:5647/ReconDetails/AssureNetServicesPOC.Models.DownloadFile?fileName='RF-53407-501904.xlsx'&ReconId=470735";
 
             try
             {
@@ -83,10 +71,19 @@ namespace AssureNetServicesPOC.Tests
             HttpResponseMessage response = httpClient.GetAsync(oDataQuery).Result;
             string s = response.Content.ReadAsStringAsync().Result;
 
+            //var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, oDataQuery)
+            //{
+            //    Content = new StringContent("key=1")
+            //};
+
+            oDataQuery = "http://localhost:5647/ReconDetails/GetFile";
+
+            HttpResponseMessage res = httpClient.PostAsync(oDataQuery, new StringContent("key=1")).Result;
+            string s1 = res.Content.ReadAsStringAsync().Result;
             //var reconAccounts = JsonConvert.DeserializeObject<ODataResponse<RecondDetail>>(s);
         }
 
-       
+        
 
         private string GenerateODataURI(string baseAddress, List<string> companyCodes)
         {
@@ -154,5 +151,15 @@ namespace AssureNetServicesPOC.Tests
         public string Approver { get; set; }
         public string Attachment { get; set; }
     }
+
+
+    public class ContextData
+    {
+        public string UserAlias { get; set; }
+        public string AppID { get; set; }
+        public string TopicID { get; set; }
+        public string OtherData { get; set; }
+    }
+
 }
 

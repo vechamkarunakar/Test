@@ -32,12 +32,7 @@ namespace AssureNetServicesPOC.Tests
         private HttpClient httpClient = new HttpClient();
         private AuthenticationContext authContext = null;
 
-        [TestMethod]
-        public void TestMethod1()
-        {
-            CustomQueries cq = new CustomQueries();
-            var x = cq.GetAccountsWithAttachments();
-        }
+        
 
 
         [TestMethod]
