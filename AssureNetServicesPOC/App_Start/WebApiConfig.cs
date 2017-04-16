@@ -8,6 +8,7 @@ using System.Web.OData.Extensions;
 using System.Web.OData;
 using Microsoft.Practices.Unity;
 using Microsoft.OData.Edm;
+using System.IO;
 
 namespace AssureNetServicesPOC
 {
@@ -52,33 +53,8 @@ namespace AssureNetServicesPOC
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
 
-            //builder.EntitySet<ReconAccount>("ReconAccounts");
-            //builder.EntitySet<Reconciliations_Files>("ReconFiles");
-            //builder.EntitySet<view_ReconciliationResults>("ReconResults");
-
-            /*
-                ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-                builder.EntitySet<Product>("Products");
-                builder.EntitySet<Supplier>("Suppliers");
-                builder.EntitySet<ProductRating>("Ratings");
-
-                // New code: Add an action to the EDM, and define the parameter and return type.
-                ActionConfiguration rateProduct = builder.Entity>Product>().Action("RateProduct");
-                rateProduct.Parameter<int>("Rating");
-                rateProduct.Returns<double>();
-
-             */
-
             builder.EntitySet<ReconDetail>("ReconDetails");
             builder.EntitySet<ActiveUser>("ActiveUsers");
-
-            ActionConfiguration GetFileAction = builder.EntityType<ReconDetail>().Action("GetFile");
-            GetFileAction.ReturnsFromEntitySet<ReconDetail>("ReconDetails");
-
-            ActionConfiguration GetUserAction = builder.EntityType<ActiveUser>().Action("GetUser");
-            GetUserAction.Returns<double>();
-
-            builder.Namespace = typeof(ActiveUser).Namespace;
 
             return builder.GetEdmModel();
         }

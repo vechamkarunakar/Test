@@ -10,13 +10,19 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using AssureNetServicesPOC.Pipeline;
+using System.Web.OData.Routing;
+using System.Diagnostics;
+using System.Net.Http;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Configuration;
 
 namespace AssureNetServicesPOC.Controllers
 {
     /// <summary>
     /// 
     /// </summary>
-    [AssurenetAuthorize]
+    //[AssurenetAuthorize]
     public class ReconDetailsController : ODataController
     {
         private ActiveUser activeUser { get; set; }
@@ -39,7 +45,6 @@ namespace AssureNetServicesPOC.Controllers
             this.uow = new UnitOfWork<ReconDetail>();
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -47,7 +52,7 @@ namespace AssureNetServicesPOC.Controllers
         /// <returns></returns>
         public IEnumerable<ReconDetail> Get(ODataQueryOptions<ReconDetail> queryOptions)
         {
-            var userAlias = GetUserAlias();
+            var userAlias = UserProvider.GetUserAlias();
 
             UserRepo userRepo = new UserRepo();
             var user = userRepo.GetUser(userAlias);
@@ -71,29 +76,53 @@ namespace AssureNetServicesPOC.Controllers
             return rd;
         }
 
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="fileName"></param>
+        /// <param name="ReconId"></param>
         /// <returns></returns>
-        [HttpPost]
-        public IHttpActionResult GetFile(int key)
-        {
-            //string fileName = Convert.ToString(parameters["FileName"]);
-            
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //[HttpGet]
+        //[EnableQuery(AllowedQueryOptions=AllowedQueryOptions.None)]
+        //public HttpResponseMessage DownloadFile([FromODataUri]string fileName, [FromODataUri]int ReconId)
+        //{
+        //    var res1 = DownloadFile(fileName);
+        //    return res1;
 
-        private string GetUserAlias()
-        {
-            var loginName = HttpContext.Current.Request.LogonUserIdentity.Name;
-            if (string.IsNullOrEmpty(loginName)) return null;
-            //Assuming that login name always have domain\\useralias
+        //    var userAlias = GetUserAlias();
+        //    HttpResponseMessage res = null;
+        //    UserRepo userRepo = new UserRepo();
+        //    var user = userRepo.GetUser(userAlias);
 
-            var domainAlias = loginName.Split("\\".ToCharArray());
-            string userAlias = domainAlias[1];
-            
-            return userAlias;
-        }
+        //    EffectiveDatesRepo edr = new EffectiveDatesRepo();
+        //    DateTime dtFilter = edr.FilterForFBIS();
+
+        //    IEnumerable<ReconDetail> rd = null;
+        //    if (user.Role_ProgramAdmin)
+        //    {
+        //        Debug.WriteLine("Admin functionality");
+        //        rd = uow.GetEntities.Get().Where(r => r.EffectiveDate > dtFilter && r.FileName == fileName && r.ReconId == ReconId);
+        //    }
+        //    else
+        //    {
+        //        Debug.WriteLine("Non Admin functionality");
+        //        rd = uow.GetEntities.Get().Where((r => ((r.ReconcilerID == user.PKId && user.Role_Reconciler)
+        //                || (r.ReviewerID == user.PKId && user.Role_Reviewer)
+        //                || (r.ApproverID == user.PKId && user.Role_Approver)) && (r.EffectiveDate > dtFilter)
+        //                    && (r.FileName == fileName)
+        //                    && (r.ReconId == ReconId)
+        //                    )
+        //                );
+        //    }
+        //    if (rd != null && rd.Count() != 0)
+        //    {
+        //        Debug.WriteLine("Download stream");
+        //        res = DownloadFile(fileName);
+        //    }
+        //    return res;
+        //}
+
+        
     }
 }

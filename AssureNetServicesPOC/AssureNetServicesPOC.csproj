@@ -269,10 +269,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ActiveUsersController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\FileProvider.cs" />
+    <Compile Include="Controllers\IFileProvider.cs" />
     <Compile Include="Controllers\IGenericController.cs" />
     <Compile Include="Controllers\IReconAccountsController.cs" />
     <Compile Include="Controllers\ReconAccountsController.cs" />
     <Compile Include="Controllers\ReconDetailsController.cs" />
+    <Compile Include="Controllers\UserProvider.cs" />
     <Compile Include="DAL\CustomQueries.cs" />
     <Compile Include="DAL\EffectiveDatesRepo.cs" />
     <Compile Include="DAL\ReconRepo.cs" />
