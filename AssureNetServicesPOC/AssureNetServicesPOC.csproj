@@ -277,7 +277,6 @@
     <Compile Include="Controllers\ReconAccountsController.cs" />
     <Compile Include="Controllers\ReconDetailsController.cs" />
     <Compile Include="Controllers\UserProvider.cs" />
-    <Compile Include="DAL\CustomQueries.cs" />
     <Compile Include="DAL\EffectiveDatesRepo.cs" />
     <Compile Include="DAL\ReconRepo.cs" />
     <Compile Include="DAL\UserRepo.cs" />
