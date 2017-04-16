@@ -53,7 +53,9 @@ namespace AssureNetServicesPOC
             ODataModelBuilder builder = new ODataConventionModelBuilder();
 
             builder.EntitySet<ReconDetail>("ReconDetails");
-            builder.EntityType<ReconDetail>().Filter("AccountNumber").OrderBy(System.Web.OData.Query.QueryOptionSetting.Allowed).Page(null,50).Filter(System.Web.OData.Query.QueryOptionSetting.Allowed);
+            builder.EntityType<ReconDetail>().Count(System.Web.OData.Query.QueryOptionSetting.Allowed).Filter(System.Web.OData.Query.QueryOptionSetting.Allowed)
+                .Page(5, 5).OrderBy(System.Web.OData.Query.QueryOptionSetting.Allowed);
+                
             builder.EntitySet<ActiveUser>("ActiveUsers");
             builder.EntitySet<EffectiveDate>("EffectiveDates");
 

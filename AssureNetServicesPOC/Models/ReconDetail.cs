@@ -6,8 +6,7 @@ using System.Web.OData.Query;
 
 namespace AssureNetServicesPOC.Models
 {
-    [Select(SelectType = SelectExpandType.Automatic)]
-    [Select("ReconId", SelectType = SelectExpandType.Disabled)]
+    
     public partial class ReconDetail
     {
         [StringLength(50)]
@@ -102,10 +101,10 @@ namespace AssureNetServicesPOC.Models
         [StringLength(200)]
         public string FileName { get; set; }
 
-        public int ReconcilerID { get; set; }
+        public int? ReconcilerID { get; set; }
 
-        public int ReviewerID { get; set; }
+        public int? ReviewerID { get; set; }
 
-        public int ApproverID { get; set; }
+        public int? ApproverID { get; set; }
     }
 }

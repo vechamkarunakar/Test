@@ -51,6 +51,7 @@ namespace AssureNetServicesPOC.Controllers
         /// </summary>
         /// <param name="queryOptions"></param>
         /// <returns></returns>
+        [EnableQuery(PageSize =50)]
         public IEnumerable<ReconDetail> Get(ODataQueryOptions<ReconDetail> queryOptions)
         {
             var userAlias = UserProvider.GetUserAlias();
