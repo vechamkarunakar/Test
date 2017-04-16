@@ -1,15 +1,20 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.OData;
+using System.Web.OData.Query;
 
 namespace AssureNetServicesPOC.Models
 {
+    [Select(SelectType = SelectExpandType.Automatic)]
+    [Select("ReconId", SelectType = SelectExpandType.Disabled)]
     public partial class ReconDetail
     {
         [StringLength(50)]
         public string CompanyCode { get; set; }
 
         [StringLength(50)]
+        
         public string AccountNumber { get; set; }
 
         [Key]

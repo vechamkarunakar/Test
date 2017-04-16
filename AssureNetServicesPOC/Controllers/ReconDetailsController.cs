@@ -23,6 +23,7 @@ namespace AssureNetServicesPOC.Controllers
     /// 
     /// </summary>
     [AssurenetAuthorize]
+    
     public class ReconDetailsController : ODataController
     {
         private ActiveUser activeUser { get; set; }

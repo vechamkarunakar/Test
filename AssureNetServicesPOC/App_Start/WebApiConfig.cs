@@ -28,8 +28,7 @@ namespace AssureNetServicesPOC
             config.DependencyResolver = new UnityResolver(container);
 
             //config.MapHttpAttributeRoutes();
-            //config.Filter();
-            //config.Filters.Add(new EnableQueryAttribute() { PageSize = 50 });
+            //config.Filters.Add(new EnableQueryAttribute() { PageSize = 1 });
             //config.Count().Filter(System.Web.OData.Query.QueryOptionSetting.Allowed).OrderBy().Expand().Select().MaxTop(null);
 
             config.Routes.MapHttpRoute(
@@ -54,7 +53,9 @@ namespace AssureNetServicesPOC
             ODataModelBuilder builder = new ODataConventionModelBuilder();
 
             builder.EntitySet<ReconDetail>("ReconDetails");
+            builder.EntityType<ReconDetail>().Filter("AccountNumber").OrderBy(System.Web.OData.Query.QueryOptionSetting.Allowed).Page(null,50).Filter(System.Web.OData.Query.QueryOptionSetting.Allowed);
             builder.EntitySet<ActiveUser>("ActiveUsers");
+            builder.EntitySet<EffectiveDate>("EffectiveDates");
 
             return builder.GetEdmModel();
         }

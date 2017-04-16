@@ -31,6 +31,13 @@ namespace AssureNetServicesPOC.Controllers
     {
     }
 
-    
+    /// <summary>
+    /// 
+    /// </summary>
+    public class EffectiveDatesController : GenericController<EffectiveDate>, IDisposable
+    {
+    }
+
+
 }
 
