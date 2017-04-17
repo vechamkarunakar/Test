@@ -6,7 +6,7 @@ using System.Web;
 
 namespace AssureNetServicesPOC.DAL
 {
-    public class EffectiveDatesRepo
+    public class EffectiveDatesRepo : IEffectiveDatesRepo
     {
         /// <summary>
         /// 

@@ -279,6 +279,8 @@
     <Compile Include="Controllers\ReconDetailsController.cs" />
     <Compile Include="Controllers\UserProvider.cs" />
     <Compile Include="DAL\EffectiveDatesRepo.cs" />
+    <Compile Include="DAL\IEffectiveDatesRepo.cs" />
+    <Compile Include="DAL\IUserRepo.cs" />
     <Compile Include="DAL\ReconRepo.cs" />
     <Compile Include="DAL\UserRepo.cs" />
     <Compile Include="Global.asax.cs">

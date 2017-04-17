@@ -7,14 +7,19 @@ namespace AssureNetServicesPOC.DAL
     /// <summary>
     /// 
     /// </summary>
-    public class UserRepo
+    public class UserRepo : IUserRepo
     {
         private ActiveUser activeUser { get; set; }
-        private IUnitOfWork<ActiveUser> uow;
+        private IUnitOfWork<ActiveUser> uowAU;
 
         public UserRepo()
         {
-            uow = new UnitOfWork<ActiveUser>();
+            uowAU = new UnitOfWork<ActiveUser>();
+        }
+
+        public UserRepo(IUnitOfWork<ActiveUser> activeUser)
+        {
+            this.uowAU = activeUser;
         }
         /// <summary>
         /// 
@@ -23,7 +28,7 @@ namespace AssureNetServicesPOC.DAL
         /// <returns></returns>
         public ActiveUser GetUser(string Alias)
         {
-            var user = uow.GetEntities.Get().Where<ActiveUser>(un => un.UserName.ToLower() == Alias).SingleOrDefault();
+            var user = uowAU.GetEntities.Get().Where<ActiveUser>(un => un.UserName.ToLower() == Alias).SingleOrDefault();
             return user;
         }
 

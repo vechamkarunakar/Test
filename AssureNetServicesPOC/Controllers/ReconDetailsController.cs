@@ -23,19 +23,22 @@ namespace AssureNetServicesPOC.Controllers
     /// 
     /// </summary>
     [AssurenetAuthorize]
-    
     public class ReconDetailsController : ODataController
     {
         private ActiveUser activeUser { get; set; }
         private IUnitOfWork<ReconDetail> uow;
+        UserRepo userRepo = null;
+        IEffectiveDatesRepo effectiveDatesRepo = null;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="iow"></param>
-        public ReconDetailsController(IUnitOfWork<ReconDetail> iow)
+        public ReconDetailsController(IUnitOfWork<ReconDetail> iow, UserRepo userRepo, IEffectiveDatesRepo effectiveDatesRepo)
         {
             this.uow = iow;
+            this.userRepo = userRepo;
+            this.effectiveDatesRepo = effectiveDatesRepo;
         }
 
         /// <summary>
@@ -44,6 +47,8 @@ namespace AssureNetServicesPOC.Controllers
         public ReconDetailsController()
         {
             this.uow = new UnitOfWork<ReconDetail>();
+            this.userRepo = new UserRepo();
+            this.effectiveDatesRepo = new EffectiveDatesRepo();
         }
 
         /// <summary>
@@ -55,12 +60,8 @@ namespace AssureNetServicesPOC.Controllers
         public IEnumerable<ReconDetail> Get(ODataQueryOptions<ReconDetail> queryOptions)
         {
             var userAlias = UserProvider.GetUserAlias();
-
-            UserRepo userRepo = new UserRepo();
             var user = userRepo.GetUser(userAlias);
-
-            EffectiveDatesRepo edr = new EffectiveDatesRepo();
-            DateTime dtFilter = edr.FilterForFBIS();
+            DateTime dtFilter = effectiveDatesRepo.FilterForFBIS();
 
             IEnumerable<ReconDetail> rd = null;
             if (user.Role_ProgramAdmin)
